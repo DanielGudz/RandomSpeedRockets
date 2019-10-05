@@ -1,0 +1,55 @@
+<html> 
+ <head>
+    <title></title> 
+</head>
+ <body>
+    <p align="center"> 
+      <canvas id="mycanvas"></canvas> 
+    </p>
+ </body> 
+ <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script>
+ <script>
+var sketchProc = function(processingInstance) {
+with (processingInstance) {
+//START
+size(400, 400); 
+frameRate(30);
+
+
+var Rock = function(x, speed) {
+    this.x = x;
+    this.y = 380;
+    this.speed = speed;
+    this.draw = function() {
+        rect(this.x-10, this.y-10, 20, 45);
+        triangle(this.x-20, this.y, this.x, this.y-20, this.x + 20, this.y);
+    };
+    this.step = function(){
+        this.y -= this.speed;
+    };
+};
+
+
+var rockets = [];
+var num_rockets = 7;
+
+for (var i = 0; i < num_rockets; i++) {
+    rockets.push(new Rock(50 + 50 * i,i + random(1,5)));
+}
+
+draw = function() {
+    background(255, 255, 255);
+    for (var i = 0; i < num_rockets; i++) {
+        rockets[i].step();
+        rockets[i].draw();
+    }
+};
+//END
+}
+};
+
+var canvas = document.getElementById("mycanvas"); 
+var processingInstance = new Processing(canvas, sketchProc); 
+ </script>
+
+</html>
